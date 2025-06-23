@@ -1,0 +1,9 @@
+#color-section {
+  padding: 20px;
+}
+
+#colorResult {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}

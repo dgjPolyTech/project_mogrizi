@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모그리지-랜덤 키워드 뽑기</title>
+    <script>
+        const keywords = {
+            gender: ["남성", "여성"],
+            age: ["어린이", "청소년(10세 이하)","청소년", "청년", "중년", "노년"],
+            concept: ["현대", "판타지", "SF", "역사물", "학원물", "좀비 아포칼립스"]
+        };
+
+        function getRandoms(array){
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function getRandomKeywords(){
+            const gender = getRandoms(keywords.gender);
+            const age = getRandoms(keywords.age);
+            const concept = getRandoms(keywords.concept);
+
+            const result = {gender, age, concept};
+
+            // console.log("랜덤 키워드: ", result);
+            resultStr = "성별: "+result.gender+", "+result.age;
+            alert("랜덤 키워드: "+resultStr);
+            return result;
+        }
+    </script>
+</head>
+<body>
+    <button id="randBtn" onclick="getRandomKeywords()">랜덤 키워드 뽑기</button>
+</body>
+</html>

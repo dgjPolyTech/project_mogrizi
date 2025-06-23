@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const colorPalettes = {
+            따뜻한: [
+                ["#FFADAD", "#FFD6A5", "#FDFFB6"],
+                ["#FFA07A", "#FFB347", "#FFD700"],
+                ["#FF6F61", "#F7C59F", "#FBE8A6"],
+                ["#FF9E9E", "#FFC6A8", "#FFE3A9"],
+                ["#FEC8D8", "#FFDFD3", "#FFE0AC"]
+            ],
+            차가운: [
+                ["#A0C4FF", "#BDB2FF", "#B5EAEA"],
+                ["#7EC8E3", "#9AD0EC", "#CAE9FF"],
+                ["#4D96FF", "#6BCB77", "#C3FBD8"],
+                ["#89C2D9", "#61A5C2", "#468FAF"],
+                ["#6C5CE7", "#00B894", "#74B9FF"]
+            ],
+            몽환적: [
+                ["#DCC6E0", "#A29BFE", "#81ECEC"],
+                ["#FFE6FA", "#CBAACB", "#A3C6C4"],
+                ["#74B9FF", "#A29BFE", "#DFF9FB"],
+                ["#B2BEC3", "#DADFE1", "#BDC3C7"],
+                ["#F8EFBA", "#F6E58D", "#EAB2A0"]
+            ],
+            빈티지: [
+                ["#C9ADA7", "#9A8C98", "#4A4E69"],
+                ["#E6CCB2", "#D6A77A", "#7B5E57"],
+                ["#B08968", "#A98467", "#7F5539"],
+                ["#DDB892", "#B08968", "#9C6644"],
+                ["#F2E9E4", "#C9ADA7", "#22223B"]
+            ]
+            };
+
+            function getRandomFrom(array) {
+            return array[Math.floor(Math.random() * array.length)];
+            }
+
+            function getRandomPalette() {
+            const moodList = Object.keys(colorPalettes);
+            const mood = getRandomFrom(moodList);
+            const palette = getRandomFrom(colorPalettes[mood]);
+
+            const colorBox = palette
+                .map(color => `<div style="width: 40px; height: 40px; background-color: ${color};"></div>`)
+                .join("");
+
+            document.getElementById("colorResult").innerHTML = `
+                <p><strong>무드:</strong> ${mood}</p>
+                <div style="display: flex; gap: 8px;">${colorBox}</div>
+            `;
+            }
+    </script>
+</head>
+<body>
+    <section id="color-section">
+        <h2>🎨 색상 조합 추천</h2>
+        <button onclick="getRandomPalette()">색 조합 보기</button>
+        <div id="colorResult"></div>
+    </section>
+</body>
+</html>

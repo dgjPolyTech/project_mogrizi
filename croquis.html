@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/croquis.css">
+    <title>모그리지 - 크로키 연습</title>
+    <script>
+        const croquisImages = [
+            "imgs/action/g01.jpg",
+            "imgs/action/g02.jpg",
+            "imgs/action/g03.jpg"
+        ];
+
+        let croquisIndex = 0;
+        let croquisTimer = null;
+
+        function showCroquisImage(src) {
+            document.getElementById("croquisImg").src = src;
+        }
+
+        function startCroquis(intervalSeconds = 60) {
+        clearInterval(croquisTimer);
+        croquisIndex = 0;
+        showCroquisImage(croquisImages[croquisIndex]);
+
+        croquisTimer = setInterval(() => {
+            croquisIndex = (croquisIndex + 1) % croquisImages.length;
+            showCroquisImage(croquisImages[croquisIndex]);
+        }, intervalSeconds * 1000);
+        }
+
+        function stopCroquis() {
+        clearInterval(croquisTimer);
+        }
+    </script>
+</head>
+<body>
+    <section id="croquis-section">
+    <h2>🖼️ 크로키 연습 모드</h2>
+
+    <div class="croquis-controls">
+        <input />
+        <!-- <button onclick="startCroquis(30)">30초</button>
+        <button onclick="startCroquis(60)">1분</button> -->
+        <button onclick="stopCroquis()">정지</button>
+    </div>
+
+    <div class="croquis-image-wrapper">
+        <h1>크로키 시간 단위를 입력하고, 연습하세요.</h1>
+        <img id="croquisImg" src="images/croquis/pose1.jpg" alt="크로키 이미지" />
+    </div>
+    </section>
+</body>
+</html>
