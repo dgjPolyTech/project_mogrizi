@@ -7,8 +7,6 @@ body {
 
 .croquis-title {
   text-align: center;
-  background-color: #3b3b3b;
-  color: white;
   padding: 20px 0;
 }
 
@@ -53,18 +51,71 @@ body {
   background-color: #45a049;
 }
 
-.croquis-imgWrapper {
-  max-width: 90%;
-  max-height: 80vh;
-  overflow: hidden;
+#croquisDisplay {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.croquis-imgWrapper {
+  width: 90%;
+  max-width: 600px;
+  height: 500px;
+  max-height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  padding: 10px;
+}
 .croquis-imgWrapper img {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+  display: block;
+}
+.croquis-placeholder {
+  font-size: 20px;
+  color: #999;
+  text-align: center;
+}
+
+.croquis-status,
+.croquis-timer {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.croquis-controls-top {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1;
+}
+
+.croquis-controls-top button {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #3b3b3b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+  opacity: 0.8;
+}
+
+.croquis-controls-top button:hover {
+  background-color: #2a2a2a;
+  opacity: 1;
 }

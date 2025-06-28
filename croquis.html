@@ -4,52 +4,166 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="css/croquis.css" />
+  <link rel="stylesheet" href="css/header.css" />
   <title>모그리지 - 크로키 연습</title>
-  <script>
-    let croquisImages = [];
-    let croquisIndex = 0;
-    let croquisTimer = null;
+<script>
+  let croquisImages = [];
+  let croquisIndex = 0;
+  let croquisTimer = null;
+  let countdownTimer = null;
+  let currentCountdown = 0;
 
-    function showCroquisImage(src) {
-      document.getElementById("croquisImg").src = src;
-    }
+  let completedCount = 0;
+  let skippedCount = 0;
+  let intervalSec = 60;
 
-    function generateCroquisArray(count) {
-      croquisImages = [];
-      for (let i = 1; i <= count; i++) {
-        croquisImages.push(`imgs/action/g${String(i).padStart(2, '0')}.jpg`);
+  function showCroquisImage(src) {
+    const wrapper = document.getElementById("croquisDisplay");
+    const status = document.getElementById("croquisStatus");
+
+    wrapper.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "크로키 이미지";
+    wrapper.appendChild(img);
+
+    status.textContent = `현재 ${croquisIndex + 1} / 총 ${croquisImages.length}장`;
+    startCountdown(intervalSec);
+  }
+
+  function startCountdown(seconds) {
+    clearInterval(countdownTimer);
+    currentCountdown = seconds;
+    updateCountdownDisplay();
+
+    countdownTimer = setInterval(() => {
+      currentCountdown--;
+      updateCountdownDisplay();
+
+      if (currentCountdown <= 0) {
+        clearInterval(countdownTimer);
       }
-    }
+    }, 1000);
+  }
 
-    function startCroquis(intervalSeconds = 60) {
+  function updateCountdownDisplay() {
+    document.getElementById("croquisTimer").textContent = `남은 시간: ${currentCountdown}초`;
+  }
+
+  function generateCroquisArray(count) {
+    croquisImages = [];
+    for (let i = 1; i <= count; i++) {
+      croquisImages.push(`imgs/sports/g${String(i).padStart(2, '0')}.jpg`);
+    }
+  }
+
+  function startCroquis(intervalSeconds = 60) {
+    clearInterval(croquisTimer);
+    croquisIndex = 0;
+    completedCount = 0;
+    skippedCount = 0;
+    intervalSec = intervalSeconds;
+
+    if (croquisImages.length === 0) return;
+    showCroquisImage(croquisImages[croquisIndex]);
+
+    croquisTimer = setInterval(() => {
+      moveToNextImage(false);
+    }, intervalSeconds * 1000);
+  }
+
+  function moveToNextImage(skipped = false) {
+    clearInterval(countdownTimer);
+
+    if (skipped) skippedCount++;
+    else completedCount++;
+
+    croquisIndex++;
+
+    if (croquisIndex >= croquisImages.length) {
       clearInterval(croquisTimer);
-      croquisIndex = 0;
-      if (croquisImages.length === 0) return;
-      showCroquisImage(croquisImages[croquisIndex]);
-
-      croquisTimer = setInterval(() => {
-        croquisIndex = (croquisIndex + 1) % croquisImages.length;
-        showCroquisImage(croquisImages[croquisIndex]);
-      }, intervalSeconds * 1000);
+      document.getElementById("croquisStatus").textContent =
+        `크로키를 완료했습니다! (완료: ${completedCount}장 / 스킵: ${skippedCount}장)`;
+      document.getElementById("croquisDisplay").innerHTML =
+        `<div class="croquis-placeholder">Please start</div>`;
+      document.getElementById("croquisTimer").textContent = "남은 시간: 0초";
+      return;
     }
 
-    function stopCroquis() {
+    showCroquisImage(croquisImages[croquisIndex]);
+  }
+
+  function skipImage() {
+    moveToNextImage(true);
+  }
+
+  function stopCroquis() {
+    clearInterval(croquisTimer);
+    clearInterval(countdownTimer);
+    croquisImages = [];
+    croquisIndex = 0;
+    completedCount = 0;
+    skippedCount = 0;
+
+    document.getElementById("croquisStatus").textContent = "";
+    document.getElementById("croquisTimer").textContent = "남은 시간: 0초";
+    document.getElementById("croquisDisplay").innerHTML =
+      `<div class="croquis-placeholder">Please start</div>`;
+  }
+
+  let isPaused = false;
+
+  function pauseCurrentImage() {
+    const pauseBtn = document.querySelector('.croquis-controls-top button:nth-child(2)');
+
+    if (!isPaused) {
+      // 정지 상태로 진입
+      clearInterval(countdownTimer);
       clearInterval(croquisTimer);
+      document.getElementById("croquisTimer").textContent = `(정지됨) 남은 시간: ${currentCountdown}초`;
+      pauseBtn.textContent = "재개";
+      isPaused = true;
+    } else {
+      // 정지 해제 → 타이머 재개
+      pauseBtn.textContent = "정지";
+      isPaused = false;
+
+      countdownTimer = setInterval(() => {
+        currentCountdown--;
+        updateCountdownDisplay();
+
+        if (currentCountdown <= 0) {
+          clearInterval(countdownTimer);
+          moveToNextImage(false);
+        }
+      }, 1000);
+    }
+  }
+
+  function onStartClicked() {
+    const count = parseInt(document.getElementById("imageCount").value);
+    const interval = parseInt(document.getElementById("intervalTime").value);
+    const wrapper = document.getElementById("croquisDisplay");
+    const status = document.getElementById("croquisStatus");
+
+    if (isNaN(count) || count <= 0) {
+      alert("이미지 개수를 올바르게 입력해주세요.");
+      return;
+    }
+    if (isNaN(interval) || interval <= 0) {
+      alert("간격(초)을 올바르게 입력해주세요.");
+      return;
     }
 
-    function onStartClicked() {
-      const count = parseInt(document.getElementById("imageCount").value);
-      const interval = parseInt(document.getElementById("intervalTime").value);
-      if (isNaN(count) || count <= 0) {
-        alert("이미지 개수를 올바르게 입력해주세요.");
-        return;
-      }
-      generateCroquisArray(count);
-      startCroquis(interval);
-    }
-  </script>
+    generateCroquisArray(count);
+    wrapper.innerHTML = ""; // 시작 시 placeholder 제거
+    status.textContent = ""; // 상태 초기화
+    startCroquis(interval);
+  }
+</script>
 </head>
 <body>
+  <div id="header"></div>
   <div class="croquis-title">
     <h2>크로키 연습 모드</h2>
   </div>
@@ -59,18 +173,21 @@
         <input type="number" id="imageCount" min="1" placeholder="예: 10" />
       </label>
       <label>간격(초):
-        <select id="intervalTime">
-          <option value="30">30초</option>
-          <option value="60" selected>1분</option>
-          <option value="90">1분 30초</option>
-        </select>
+        <input type="number" id="intervalTime" min="1" placeholder="예: 60" />
       </label>
       <button onclick="onStartClicked()">시작</button>
       <button onclick="stopCroquis()">정지</button>
     </div>
 
+    <div class="croquis-status" id="croquisStatus"></div>
+    <div class="croquis-timer" id="croquisTimer">남은 시간: 0초</div>
+
     <div class="croquis-imgWrapper">
-      <img id="croquisImg" src="imgs/action/g01.jpg" alt="크로키 이미지" />
+      <div class="croquis-controls-top">
+        <button onclick="skipImage()">스킵</button>
+        <button onclick="pauseCurrentImage()">정지</button>
+      </div>
+      <div id="croquisDisplay" class="croquis-placeholder">Please start</div>
     </div>
   </div>
 </body>
