@@ -1,55 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/croquis.css">
-    <title>모그리지 - 크로키 연습</title>
-    <script>
-        const croquisImages = [
-            "imgs/action/g01.jpg",
-            "imgs/action/g02.jpg",
-            "imgs/action/g03.jpg"
-        ];
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/croquis.css" />
+  <title>모그리지 - 크로키 연습</title>
+  <script>
+    let croquisImages = [];
+    let croquisIndex = 0;
+    let croquisTimer = null;
 
-        let croquisIndex = 0;
-        let croquisTimer = null;
+    function showCroquisImage(src) {
+      document.getElementById("croquisImg").src = src;
+    }
 
-        function showCroquisImage(src) {
-            document.getElementById("croquisImg").src = src;
-        }
+    function generateCroquisArray(count) {
+      croquisImages = [];
+      for (let i = 1; i <= count; i++) {
+        croquisImages.push(`imgs/action/g${String(i).padStart(2, '0')}.jpg`);
+      }
+    }
 
-        function startCroquis(intervalSeconds = 60) {
-        clearInterval(croquisTimer);
-        croquisIndex = 0;
+    function startCroquis(intervalSeconds = 60) {
+      clearInterval(croquisTimer);
+      croquisIndex = 0;
+      if (croquisImages.length === 0) return;
+      showCroquisImage(croquisImages[croquisIndex]);
+
+      croquisTimer = setInterval(() => {
+        croquisIndex = (croquisIndex + 1) % croquisImages.length;
         showCroquisImage(croquisImages[croquisIndex]);
+      }, intervalSeconds * 1000);
+    }
 
-        croquisTimer = setInterval(() => {
-            croquisIndex = (croquisIndex + 1) % croquisImages.length;
-            showCroquisImage(croquisImages[croquisIndex]);
-        }, intervalSeconds * 1000);
-        }
+    function stopCroquis() {
+      clearInterval(croquisTimer);
+    }
 
-        function stopCroquis() {
-        clearInterval(croquisTimer);
-        }
-    </script>
+    function onStartClicked() {
+      const count = parseInt(document.getElementById("imageCount").value);
+      const interval = parseInt(document.getElementById("intervalTime").value);
+      if (isNaN(count) || count <= 0) {
+        alert("이미지 개수를 올바르게 입력해주세요.");
+        return;
+      }
+      generateCroquisArray(count);
+      startCroquis(interval);
+    }
+  </script>
 </head>
 <body>
-    <section id="croquis-section">
-    <h2>🖼️ 크로키 연습 모드</h2>
-
-    <div class="croquis-controls">
-        <input />
-        <!-- <button onclick="startCroquis(30)">30초</button>
-        <button onclick="startCroquis(60)">1분</button> -->
-        <button onclick="stopCroquis()">정지</button>
+  <div class="croquis-title">
+    <h2>크로키 연습 모드</h2>
+  </div>
+  <div class="croquis-contents">
+    <div class="croquis-settings">
+      <label>이미지 수:
+        <input type="number" id="imageCount" min="1" placeholder="예: 10" />
+      </label>
+      <label>간격(초):
+        <select id="intervalTime">
+          <option value="30">30초</option>
+          <option value="60" selected>1분</option>
+          <option value="90">1분 30초</option>
+        </select>
+      </label>
+      <button onclick="onStartClicked()">시작</button>
+      <button onclick="stopCroquis()">정지</button>
     </div>
 
-    <div class="croquis-image-wrapper">
-        <h1>크로키 시간 단위를 입력하고, 연습하세요.</h1>
-        <img id="croquisImg" src="images/croquis/pose1.jpg" alt="크로키 이미지" />
+    <div class="croquis-imgWrapper">
+      <img id="croquisImg" src="imgs/action/g01.jpg" alt="크로키 이미지" />
     </div>
-    </section>
+  </div>
 </body>
 </html>

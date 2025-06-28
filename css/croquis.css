@@ -1,26 +1,70 @@
-#croquis-section {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  max-width: 600px;
-  margin: 0 auto;
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+.croquis-title {
   text-align: center;
+  background-color: #3b3b3b;
+  color: white;
+  padding: 20px 0;
 }
 
-.croquis-controls {
-  margin-bottom: 16px;
+.croquis-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
-.croquis-controls button {
-  margin: 0 6px;
-  padding: 8px 16px;
+.croquis-settings {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.croquis-settings label {
   font-size: 16px;
 }
 
-.croquis-image-wrapper img {
-  width: 100%;
-  max-height: 400px;
-  object-fit: contain;
-  border: 1px solid #ccc;
+.croquis-settings input,
+.croquis-settings select {
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.croquis-settings button {
+  padding: 6px 15px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.croquis-settings button:hover {
+  background-color: #45a049;
+}
+
+.croquis-imgWrapper {
+  max-width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.croquis-imgWrapper img {
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }

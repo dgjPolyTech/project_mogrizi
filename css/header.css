@@ -1,0 +1,9 @@
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 필요 시 조정 */
+}
+.header-title h2,
+.header-title span {
+  margin: 0;
+}
