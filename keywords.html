@@ -1,35 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>모그리지-랜덤 키워드 뽑기</title>
-    <script>
-        const keywords = {
-            gender: ["남성", "여성"],
-            age: ["어린이", "청소년(10세 이하)","청소년", "청년", "중년", "노년"],
-            concept: ["현대", "판타지", "SF", "역사물", "학원물", "좀비 아포칼립스"]
-        };
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>모그리지 - 랜덤 키워드 뽑기</title>
+  <link rel="stylesheet" href="css/keywords.css" />
 
-        function getRandoms(array){
-            return array[Math.floor(Math.random() * array.length)];
-        }
+  <script>
+    const keywords = {
+      gender: ["남성", "여성"],
+      age: ["어린이", "청소년(10세 이하)", "청소년", "청년", "중년", "노년"],
+      concept: ["현대", "판타지", "SF", "역사물", "학원물", "좀비 아포칼립스"]
+    };
 
-        function getRandomKeywords(){
-            const gender = getRandoms(keywords.gender);
-            const age = getRandoms(keywords.age);
-            const concept = getRandoms(keywords.concept);
+    function getRandoms(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
 
-            const result = {gender, age, concept};
+    function getRandomKeywords() {
+    const gender = getRandoms(keywords.gender);
+    const age = getRandoms(keywords.age);
+    const concept = getRandoms(keywords.concept);
 
-            // console.log("랜덤 키워드: ", result);
-            resultStr = "성별: "+result.gender+", "+result.age;
-            alert("랜덤 키워드: "+resultStr);
-            return result;
-        }
-    </script>
+    const resultBox = document.getElementById("resultBox");
+
+    resultBox.innerHTML = `
+        <div><strong>성별:</strong> ${gender}</div>
+        <div><strong>연령:</strong> ${age}</div>
+        <div><strong>콘셉트:</strong> ${concept}</div>
+    `;
+    }
+  </script>
 </head>
 <body>
-    <button id="randBtn" onclick="getRandomKeywords()">랜덤 키워드 뽑기</button>
+  <div class="title">
+    <h2>랜덤 키워드 뽑기</h2>
+  </div>
+
+  <div class="contents">
+    <button class="random-button" onclick="getRandomKeywords()">랜덤 키워드 뽑기</button>
+    <div id="resultBox" class="result-box">여기에 키워드 결과가 표시됩니다.</div>
+  </div>
 </body>
 </html>

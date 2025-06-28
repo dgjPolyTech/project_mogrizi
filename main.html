@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>모그리지 - 메인 페이지</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-title {
+      text-align: center;
+      padding: 40px 0 20px;
+    }
+
+    .feature-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .feature-card {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 30px 20px;
+      width: 280px;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .feature-card p {
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .feature-card a {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: background-color 0.3s;
+    }
+
+    .feature-card a:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-title">
+    <h2>모그리지에 오신 것을 환영합니다</h2>
+    <p>원하는 기능을 선택해보세요</p>
+  </div>
+
+  <div class="feature-container">
+    <div class="feature-card">
+      <h3>크로키 연습 모드</h3>
+      <p>설정한 시간 간격에 따라 이미지를 순차적으로 보며 크로키를 연습할 수 있어요.</p>
+      <a href="croquis.html">바로가기</a>
+    </div>
+
+    <div class="feature-card">
+      <h3>랜덤 키워드 뽑기</h3>
+      <p>그림 소재가 고민될 때, 랜덤으로 성별·연령·세계관 키워드를 추천받아보세요.</p>
+      <a href="keyword.html">바로가기</a>
+    </div>
+
+    <div class="feature-card">
+      <h3>색 조합 추천</h3>
+      <p>조화로운 색감을 만들고 싶을 때, 랜덤 컬러 팔레트를 참고해보세요.</p>
+      <a href="palette.html">바로가기</a>
+    </div>
+  </div>
+</body>
+</html>
