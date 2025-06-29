@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stlyesheet" href="pallete.css"/>
     <title>Document</title>
     <script>
         const colorPalettes = {
@@ -50,7 +51,7 @@
                 .join("");
 
             document.getElementById("colorResult").innerHTML = `
-                <p><strong>무드:</strong> ${mood}</p>
+                <p><strong>느낌:</strong> ${mood}</p>
                 <div style="display: flex; gap: 8px;">${colorBox}</div>
             `;
             }
