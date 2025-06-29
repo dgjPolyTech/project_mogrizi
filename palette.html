@@ -41,23 +41,89 @@
         ]
       };
 
-      function getRandomFrom(array) {
-        return array[Math.floor(Math.random() * array.length)];
-      }
+      const colorNames = {
+        "#FFADAD": "연한 빨강",
+        "#FFD6A5": "살구색",
+        "#FDFFB6": "연노랑",
+        "#FFA07A": "살몬",
+        "#FFB347": "밝은 주황",
+        "#FFD700": "금색",
+        "#FF6F61": "코랄",
+        "#F7C59F": "피치",
+        "#FBE8A6": "크림",
+        "#FF9E9E": "핑크",
+        "#FFC6A8": "베이지핑크",
+        "#FFE3A9": "연노랑",
+        "#FEC8D8": "로즈핑크",
+        "#FFDFD3": "살구 핑크",
+        "#FFE0AC": "살색",
+        "#A0C4FF": "연한 파랑",
+        "#BDB2FF": "연보라",
+        "#B5EAEA": "하늘색",
+        "#7EC8E3": "민트블루",
+        "#9AD0EC": "아쿠아",
+        "#CAE9FF": "아이보리 블루",
+        "#4D96FF": "중간 파랑",
+        "#6BCB77": "연두",
+        "#C3FBD8": "연한 민트",
+        "#89C2D9": "하늘 파랑",
+        "#61A5C2": "푸른 회색",
+        "#468FAF": "딥 블루",
+        "#6C5CE7": "보라",
+        "#00B894": "청록",
+        "#74B9FF": "연파랑",
+        "#DCC6E0": "연보라 핑크",
+        "#A29BFE": "라벤더",
+        "#81ECEC": "민트",
+        "#FFE6FA": "밝은 핑크",
+        "#CBAACB": "보라핑크",
+        "#A3C6C4": "그레이시 민트",
+        "#DFF9FB": "하얀 민트",
+        "#B2BEC3": "밝은 회색",
+        "#DADFE1": "실버",
+        "#BDC3C7": "회색",
+        "#F8EFBA": "밝은 크림",
+        "#F6E58D": "노란 크림",
+        "#EAB2A0": "살구빛",
+        "#C9ADA7": "인디 핑크",
+        "#9A8C98": "퍼플 그레이",
+        "#4A4E69": "진한 남색",
+        "#E6CCB2": "밀크티",
+        "#D6A77A": "갈색",
+        "#7B5E57": "브라운",
+        "#B08968": "황갈색",
+        "#A98467": "모카",
+        "#7F5539": "초코",
+        "#DDB892": "크림브라운",
+        "#9C6644": "진한 브라운",
+        "#F2E9E4": "아이보리",
+        "#22223B": "네이비"
+      };
 
       $('.palette-button').on('click', function () {
         const moodList = Object.keys(colorPalettes);
-        const mood = getRandomFrom(moodList);
-        const palette = getRandomFrom(colorPalettes[mood]);
+        const mood = moodList[Math.floor(Math.random() * moodList.length)];
+        const palette = colorPalettes[mood][Math.floor(Math.random() * colorPalettes[mood].length)];
 
         const swatches = palette
-          .map(color => `<div class="color-swatch" style="background-color: ${color};"></div>`)
+          .map(color => {
+            const name = colorNames[color] || "이름 없음";
+            return `
+              <div class="color-swatch-wrapper">
+                <div class="color-swatch" style="background-color: ${color};"></div>
+                <div class="color-label">
+                  <div><strong>${color}</strong></div>
+                  <div>${name}</div>
+                </div>
+              </div>
+            `;
+          })
           .join("");
 
         $('#colorResult').html(`
           <div class="palette-card">
             <p><strong>느낌:</strong> ${mood}</p>
-            <div class="palette-box">${swatches}</div>
+            <div class="palette-box vertical">${swatches}</div>
           </div>
         `);
       });
