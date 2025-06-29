@@ -4,65 +4,70 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/palette.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="layout.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <title>모그리지 - 색 조합 추천</title>
-  <script>
-    const colorPalettes = {
-      따뜻한: [
-        ["#FFADAD", "#FFD6A5", "#FDFFB6"],
-        ["#FFA07A", "#FFB347", "#FFD700"],
-        ["#FF6F61", "#F7C59F", "#FBE8A6"],
-        ["#FF9E9E", "#FFC6A8", "#FFE3A9"],
-        ["#FEC8D8", "#FFDFD3", "#FFE0AC"]
-      ],
-      차가운: [
-        ["#A0C4FF", "#BDB2FF", "#B5EAEA"],
-        ["#7EC8E3", "#9AD0EC", "#CAE9FF"],
-        ["#4D96FF", "#6BCB77", "#C3FBD8"],
-        ["#89C2D9", "#61A5C2", "#468FAF"],
-        ["#6C5CE7", "#00B894", "#74B9FF"]
-      ],
-      몽환적: [
-        ["#DCC6E0", "#A29BFE", "#81ECEC"],
-        ["#FFE6FA", "#CBAACB", "#A3C6C4"],
-        ["#74B9FF", "#A29BFE", "#DFF9FB"],
-        ["#B2BEC3", "#DADFE1", "#BDC3C7"],
-        ["#F8EFBA", "#F6E58D", "#EAB2A0"]
-      ],
-      빈티지: [
-        ["#C9ADA7", "#9A8C98", "#4A4E69"],
-        ["#E6CCB2", "#D6A77A", "#7B5E57"],
-        ["#B08968", "#A98467", "#7F5539"],
-        ["#DDB892", "#B08968", "#9C6644"],
-        ["#F2E9E4", "#C9ADA7", "#22223B"]
-      ]
-    };
+  <script defer>
+    $(document).ready(function () {
+      const colorPalettes = {
+        따뜻한: [
+          ["#FFADAD", "#FFD6A5", "#FDFFB6"],
+          ["#FFA07A", "#FFB347", "#FFD700"],
+          ["#FF6F61", "#F7C59F", "#FBE8A6"],
+          ["#FF9E9E", "#FFC6A8", "#FFE3A9"],
+          ["#FEC8D8", "#FFDFD3", "#FFE0AC"]
+        ],
+        차가운: [
+          ["#A0C4FF", "#BDB2FF", "#B5EAEA"],
+          ["#7EC8E3", "#9AD0EC", "#CAE9FF"],
+          ["#4D96FF", "#6BCB77", "#C3FBD8"],
+          ["#89C2D9", "#61A5C2", "#468FAF"],
+          ["#6C5CE7", "#00B894", "#74B9FF"]
+        ],
+        몽환적: [
+          ["#DCC6E0", "#A29BFE", "#81ECEC"],
+          ["#FFE6FA", "#CBAACB", "#A3C6C4"],
+          ["#74B9FF", "#A29BFE", "#DFF9FB"],
+          ["#B2BEC3", "#DADFE1", "#BDC3C7"],
+          ["#F8EFBA", "#F6E58D", "#EAB2A0"]
+        ],
+        빈티지: [
+          ["#C9ADA7", "#9A8C98", "#4A4E69"],
+          ["#E6CCB2", "#D6A77A", "#7B5E57"],
+          ["#B08968", "#A98467", "#7F5539"],
+          ["#DDB892", "#B08968", "#9C6644"],
+          ["#F2E9E4", "#C9ADA7", "#22223B"]
+        ]
+      };
 
-    function getRandomFrom(array) {
-      return array[Math.floor(Math.random() * array.length)];
-    }
+      function getRandomFrom(array) {
+        return array[Math.floor(Math.random() * array.length)];
+      }
 
-    function getRandomPalette() {
-      const moodList = Object.keys(colorPalettes);
-      const mood = getRandomFrom(moodList);
-      const palette = getRandomFrom(colorPalettes[mood]);
+      $('.palette-button').on('click', function () {
+        const moodList = Object.keys(colorPalettes);
+        const mood = getRandomFrom(moodList);
+        const palette = getRandomFrom(colorPalettes[mood]);
 
-      const colorBox = palette
-        .map(color => `<div class="color-swatch" style="background-color: ${color};"></div>`)
-        .join("");
+        const swatches = palette
+          .map(color => `<div class="color-swatch" style="background-color: ${color};"></div>`)
+          .join("");
 
-      document.getElementById("colorResult").innerHTML = `
-        <div class="palette-card">
-          <p><strong>느낌:</strong> ${mood}</p>
-          <div class="palette-box">${colorBox}</div>
-        </div>
-      `;
-    }
+        $('#colorResult').html(`
+          <div class="palette-card">
+            <p><strong>느낌:</strong> ${mood}</p>
+            <div class="palette-box">${swatches}</div>
+          </div>
+        `);
+      });
+    });
   </script>
 </head>
 <body>
   <section id="color-section">
     <h2>🎨 색상 조합 추천</h2>
-    <button class="palette-button" onclick="getRandomPalette()">색 조합 보기</button>
+    <button class="palette-button">색 조합 보기</button>
     <div id="colorResult"></div>
   </section>
 </body>
